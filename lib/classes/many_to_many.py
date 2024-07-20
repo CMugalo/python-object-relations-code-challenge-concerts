@@ -10,7 +10,7 @@ class Band:
         pass
 
     def play_in_venue(self, venue, date):
-        self.venue = venue
+        pass
 
     def all_introductions(self):
         pass
