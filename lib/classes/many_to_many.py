@@ -39,6 +39,15 @@ class Concert:
         self.date = date
         self.band = band
         self.venue = venue
+    
+    @property
+    def date(self):
+        return self._date
+    
+    @date.setter
+    def date(self, date):
+        if isinstance(date, str) and len(date) > 0:
+            self._date = date
 
     def hometown_show(self):
         pass
@@ -51,6 +60,25 @@ class Venue:
     def __init__(self, name, city):
         self.name = name
         self.city = city
+    
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, name):
+        if isinstance(name, str) and len(name) > 0:
+            self._name = name
+    
+    @property
+    def city(self):
+        return self._city
+    
+    @city.setter
+    def city(self, city):
+        if isinstance(city, str) and len(city) > 0:
+            self._city = city
+    
 
     def concerts(self):
         pass
