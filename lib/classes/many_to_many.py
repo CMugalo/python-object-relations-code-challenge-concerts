@@ -27,17 +27,29 @@ class Band:
             self._hometown = hometown
 
     def concerts(self):
-        return [concert for concert in Concert.all if concert.band == self]
+        band_concerts = [concert for concert in Concert.all if concert.band == self] 
+        return band_concerts if len(band_concerts) > 0 else None
 
     def venues(self):
-        return list(set([concert.venue for concert in Concert.all if concert.band == self]))
+        venues_list = []
+        for concert in Band.concerts(self):
+            if not(concert.venue in venues_list):
+                venues_list.append(concert.venue)
+        return venues_list if len(venues_list) > 0 else None
 
     def play_in_venue(self, venue, date):
-        self.band_shows.append(self)
-        return Concert(date, self, venue)
+        new_concert = Concert(date, self, venue)
+        return new_concert
 
     def all_introductions(self):
-        pass
+        all_venues = Band.venues(self)
+        intros_list = []
+        if len(all_venues) == 0:
+            return None
+        else:
+            for venue in all_venues:
+                intros_list.append(f"Hello {venue.city}!!!!! We are {self.name} and we're from {self.hometown}")
+        return intros_list
 
 ############################## CLASS WITH THE SSOT ##############################
 class Concert:
@@ -78,10 +90,10 @@ class Concert:
             self._venue = venue
 
     def hometown_show(self):
-        pass
+        return self.venue.city == self.band.hometown
 
     def introduction(self):
-        pass
+        return f"Hello {self.venue.city}!!!!! We are {self.band.name} and we're from {self.band.hometown}"
 
 ############################################################################
 
@@ -118,3 +130,4 @@ class Venue:
     def bands(self):
         return list(set([concert.band for concert in Concert.all if concert.venue == self]))
     
+
