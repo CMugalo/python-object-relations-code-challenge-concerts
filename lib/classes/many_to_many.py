@@ -1,7 +1,11 @@
 class Band:
+
+    all = []
+
     def __init__(self, name, hometown):
         self.name = name
         self._hometown = hometown
+        Band.all.append(self)
     
     @property
     def name(self):
@@ -22,10 +26,10 @@ class Band:
             self._hometown = hometown
 
     def concerts(self):
-        pass
+        return [concert for concert in Concert.all if concert.band == self]
 
     def venues(self):
-        pass
+        return list(set([concert.venue for concert in Concert.all if concert.band == self]))
 
     def play_in_venue(self, venue, date):
         pass
@@ -33,12 +37,16 @@ class Band:
     def all_introductions(self):
         pass
 
-
+############################## CLASS WITH THE SSOT ##############################
 class Concert:
+
+    all = []
+
     def __init__(self, date, band, venue):
         self.date = date
         self.band = band
         self.venue = venue
+        Concert.all.append(self)
     
     @property
     def date(self):
@@ -48,6 +56,24 @@ class Concert:
     def date(self, date):
         if isinstance(date, str) and len(date) > 0:
             self._date = date
+    
+    @property
+    def band(self):
+        return self._band
+    
+    @band.setter
+    def band(self, band):
+        if isinstance(band, Band):
+            self._band = band
+    
+    @property
+    def venue(self):
+        return self._venue
+    
+    @venue.setter
+    def venue(self, venue):
+        if isinstance(venue, Venue):
+            self._venue = venue
 
     def hometown_show(self):
         pass
@@ -55,11 +81,16 @@ class Concert:
     def introduction(self):
         pass
 
+######################################################################
 
 class Venue:
+
+    all = []
+
     def __init__(self, name, city):
         self.name = name
         self.city = city
+        Venue.all.append(self)
     
     @property
     def name(self):
