@@ -6,6 +6,7 @@ class Band:
         self.name = name
         self._hometown = hometown
         Band.all.append(self)
+        self.band_shows = []
     
     @property
     def name(self):
@@ -32,7 +33,8 @@ class Band:
         return list(set([concert.venue for concert in Concert.all if concert.band == self]))
 
     def play_in_venue(self, venue, date):
-        pass
+        self.band_shows.append(self)
+        return Concert(date, self, venue)
 
     def all_introductions(self):
         pass
@@ -109,7 +111,6 @@ class Venue:
     def city(self, city):
         if isinstance(city, str) and len(city) > 0:
             self._city = city
-    
 
     def concerts(self):
         return [concert for concert in Concert.all if concert.venue == self]
