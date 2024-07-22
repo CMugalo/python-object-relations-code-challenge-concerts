@@ -112,7 +112,8 @@ class Venue:
     
 
     def concerts(self):
-        pass
+        return [concert for concert in Concert.all if concert.venue == self]
 
     def bands(self):
-        pass
+        return list(set([concert.band for concert in Concert.all if concert.venue == self]))
+    
